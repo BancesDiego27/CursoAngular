@@ -12,6 +12,7 @@ import { NopagefoundComponent } from './pages/nopagefound/nopagefound.component'
   declarations: [
     AppComponent,
     NopagefoundComponent,
+  
   ],
   imports: [
     BrowserModule,
