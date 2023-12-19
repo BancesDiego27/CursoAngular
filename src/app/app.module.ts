@@ -6,6 +6,7 @@ import { AuthModule } from './auth/auth.module';
 
 import { AppComponent } from './app.component';
 import { NopagefoundComponent } from './pages/nopagefound/nopagefound.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -18,7 +19,9 @@ import { NopagefoundComponent } from './pages/nopagefound/nopagefound.component'
     BrowserModule,
     AppRoutingModule,
     PagesModule,
-    AuthModule
+    AuthModule,
+    ReactiveFormsModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
