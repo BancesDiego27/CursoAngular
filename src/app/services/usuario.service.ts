@@ -3,7 +3,7 @@ import { Injectable, NgZone } from '@angular/core';
 import { RegisterForm } from '../interfaces/registerForm.interfaces';
 import { environment } from 'src/environments/environment.development';
 import { LoginForm } from '../interfaces/loginForm.interfaces';
-import {catchError, map, tap} from 'rxjs/operators'
+import {catchError,  map, tap} from 'rxjs/operators'
 import { Observable, of } from 'rxjs';
 import { Router } from '@angular/router';
 import { Usuario } from '../models/usuario.model';
@@ -78,5 +78,43 @@ export class UsuarioService {
       })
 
     })
+  }
+  cargarUsuarios(desde:number=15){
+    // http://localhost:3000/api/usuarios?desde=5
+    return this.http.get(`${base_url}/usuarios?desde=${desde}`,{
+      headers:{
+        'x-token' :   this.token
+      }
+    }).pipe(
+      map((resp:any) =>{
+      const usuarios = resp.usuarios.map(user=> 
+        new Usuario(user.nombre,user.email,'',user.imagen,user.google,user.role,user.uid)
+        )
+        return {
+          total: resp.total,
+          usuarios
+        }
+    }))
+  }
+
+  eliminarUsuario(usuario: Usuario){
+    //http://localhost:3000/api/usuarios/65735954cd3f89b994e42859
+    
+   return this.http.delete(`${base_url}/usuarios/${usuario.uid}`,{
+      headers:{
+        'x-token' :   this.token
+      }
+    })
+
+  }
+
+  guardarRol(formData:Usuario){
+   const uid = formData.uid
+    return this.http.put(`${base_url}/usuarios/${uid}`,formData,{
+      headers:{
+        'x-token' :   this.token
+      }
+    }
+    )
   }
 }
